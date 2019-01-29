@@ -1,0 +1,126 @@
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
+const vscode = require('vscode');
+const Parser = require('html-dom-parser');
+const fs = require('fs');
+var htmlparser = require("htmlparser2");
+
+// this method is called when your extension is activated
+// your extension is activated the very first time the command is executed
+
+/**
+ * @param {vscode.ExtensionContext} context
+ */
+function activate(context) {
+
+	// Use the console to output diagnostic information (console.log) and errors (console.error)
+	// This line of code will only be executed once when your extension is activated
+	console.log('Congratulations, your extension "htmlfindclass" is now active!');
+
+	// The command has been defined in the package.json file
+	// Now provide the implementation of the command with  registerCommand
+	// The commandId parameter must match the command field in package.json
+	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
+		// The code you place here will be executed every time your command is executed
+
+		// Display a message box to the user
+		vscode.window.showInformationMessage('Hello World!');
+	});
+
+	context.subscriptions.push(disposable);
+
+	context.subscriptions.push(vscode.commands.registerCommand("extension.htmlfindclass", function (args) {
+		vscode.window.showInformationMessage('Hello, this is html find class extension click.');
+
+		vscode.window.showInformationMessage(args.fsPath);
+
+		const file = args.fsPath;
+
+		fs.access(file, fs.constants.F_OK, (err) => {
+			console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
+
+			fs.readFile(file, 'utf8', (err, fd) => {
+				if (err) {
+					if (err.code === 'ENOENT') {
+						console.error('myfile does not exist');
+						return;
+					}
+
+					throw err;
+				}
+
+				readMyData(fd, {
+					onResult: function (result) {
+
+						const writeFilePath = file + ".css";
+
+						let resultStr = '';
+						if (result) {
+							result.forEach(element => {
+								resultStr += element;
+							});
+						}
+
+						fs.writeFile(writeFilePath, resultStr, function (error) {
+
+							if (error)
+								vscode.window.showErrorMessage(error + "");
+							else
+								vscode.window.showInformationMessage('The file has been saved!');
+						});
+
+					},
+
+					onError: function () {
+						vscode.window.showErrorMessage("文件解析出错");
+					}
+				});
+			});
+		});
+	}));
+}
+
+function readMyData(fileData, parserCallback) {
+
+	const classValueArray = [];
+
+	var parser = new htmlparser.Parser({
+		onopentag: function (name, attribs) {
+		},
+		ontext: function (text) {
+		},
+		onclosetag: function (tagname) {
+		},
+		onattribute: function (name, attribs) {
+
+			if (name == "class") {
+				console.log(name + " - " + attribs);
+				classValueArray.push("." + attribs + "{}\n");
+			}
+		},
+		onend: function () {
+			console.error('onend');
+			if (parserCallback) {
+				parserCallback.onResult(classValueArray);
+			}
+		},
+		onerror: function () {
+			console.error('onerror');
+			if (parserCallback) {
+				parserCallback.onError();
+			}
+		}
+	}, { decodeEntities: true });
+	parser.write(fileData);
+	parser.end();
+}
+
+exports.activate = activate;
+
+// this method is called when your extension is deactivated
+function deactivate() { }
+
+module.exports = {
+	activate,
+	deactivate
+}
