@@ -2,7 +2,7 @@
 	"name": "htmlfindclass",
 	"displayName": "HtmlFindClass",
 	"description": "一键生成CSS模板文件",
-	"version": "1.1.1",
+	"version": "1.1.5",
 	"publisher": "sahadev",
 	"icon": "resource/CoffeeToGo.png",
 	"repository": {
