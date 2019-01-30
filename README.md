@@ -1,12 +1,29 @@
-# htmlfindclass README
+# HtmlFindClass README
 
-//1.0.0版本待完善
+## Features
+在对应的文件中，单击右键->选择HtmlFindClass。如若选中的文件格式正确，则会在选中文件的所在目录输出一个以"文件名+.css"的文件，右下角会提示生成文件的路径。这样就省去了单独拷贝class样式的时间。
 
+目前支持的文件格式有：html、vue、wxml。
+
+Vue文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-37-34_vue.gif)
+
+Html文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-39-06_html.gif)
+
+微信小程序文件wxml文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-39-52_wxml.gif)
 
-####1.1.0更新日志:
+如果需要生成id或者其它选择器，欢迎大家上手完善这个插件。
+
+我的联系方式：sahadev@foxmail.com
+
+## Known Issues
+暂时没有收到问题反馈，静待更新。
+
+## Release Notes
+
+###1.1.0
 - 去除冗余依赖库
 - 去除冗余命令
 - 去除冗余输出日志
