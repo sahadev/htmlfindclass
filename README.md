@@ -12,12 +12,15 @@ Currently supported file extensions are: html,vue,wxml.
 
 Vue文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-37-34_vue.gif)
+![](resource/Jan-30-2019_14-37-34_vue.gif)
 
 Html文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-39-06_html.gif)
+!()[resource/Jan-30-2019_14-39-06_html.gif]
 
 微信小程序文件wxml文件示例：
 ![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-39-52_wxml.gif)
+!()[resource/Jan-30-2019_14-39-52_wxml.gif]
 
 如果需要生成id或者其它选择器，欢迎大家上手完善这个插件。
 
