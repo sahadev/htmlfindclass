@@ -1,7 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-const Parser = require('html-dom-parser');
 const fs = require('fs');
 var htmlparser = require("htmlparser2");
 
@@ -17,23 +16,7 @@ function activate(context) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "htmlfindclass" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
-	});
-
-	context.subscriptions.push(disposable);
-
 	context.subscriptions.push(vscode.commands.registerCommand("extension.htmlfindclass", function (args) {
-		vscode.window.showInformationMessage('Hello, this is html find class extension click.');
-
-		vscode.window.showInformationMessage(args.fsPath);
-
 		const file = args.fsPath;
 
 		fs.access(file, fs.constants.F_OK, (err) => {
@@ -66,7 +49,7 @@ function activate(context) {
 							if (error)
 								vscode.window.showErrorMessage(error + "");
 							else
-								vscode.window.showInformationMessage('The file has been saved!');
+								vscode.window.showInformationMessage('The file has been saved! Path -> ' + writeFilePath);
 						});
 
 					},

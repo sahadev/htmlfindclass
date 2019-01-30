@@ -1,0 +1,56 @@
+<template name="product-price">
+  <wxs module="count">
+    var getMax = function(num) {
+    if(num >= 10000){
+    num/=10000;
+    return num.toFixed(1) + 'w';
+    }else{
+    return num;
+    }
+    }
+
+    module.exports.num = getMax;
+  </wxs>
+  <view class="product-prices">
+    <text class="unit">¥</text>
+    <text class="price">{{price}}</text>
+    <!-- <text wx:if="{{originPrice && originPrice !== price}}" class="origin-price">¥{{originPrice}}</text> -->
+    <!-- <text wx:if="{{promotion}}" class="promotion">{{promotion}}</text> -->
+    <text wx:if="{{couponPrice !=null}}" class="spell_text">三人拼</text>
+    <text wx:if="{{couponPrice !=null}}" class="spell_price">￥{{couponPrice}}</text>
+
+    <!-- <view wx:if="{{cartNum >= 0}}" class="cart-controller" catchtap="noop">
+      <block wx:if="{{cartNum === 0}}">
+      <mf-userinfo bindsuccess="addItem" data-product-sku="{{sku}}" data-product-type="{{goodsType}}" data-brand-id="{{goodsGroupId}}">
+        <image class="add-cart-img" src="/assets/common/cart_icon.png"></image>
+      </mf-userinfo>
+      </block>
+      <block wx:else>
+        <mf-userinfo bindsuccess="subItem" data-product-sku="{{sku}}" data-product-type="{{goodsType}}" data-brand-id="{{goodsGroupId}}">
+          <image class="sub-cart" src="/assets/common/sub_icon.png"></image>
+        </mf-userinfo>
+        <view class="cart-num">{{ cartNum }}</view>
+        <mf-userinfo bindsuccess="addItem" data-product-sku="{{sku}}" data-product-type="{{goodsType}}" data-brand-id="{{goodsGroupId}}">
+          <image class="add-cart" src="/assets/common/plus_icon.png"></image>
+        </mf-userinfo>
+      </block>
+    </view> -->
+  </view>
+  <view class="spell_info" catchtap="noop">
+    <view class="sale_count"><text wx:if="{{saleCount}}">月销</text>{{ count.num(saleCount) }}</view>
+    <view class="cart-controller">
+      <mf-userinfo bindsuccess="addItem" wx:if="{{!activityId}}">
+        <view class="order">单点</view>
+      </mf-userinfo>
+      <mf-userinfo bindsuccess="spellMeal" wx:if="{{!activityId}}">
+        <view class="spell-btn">
+          <view class="spell_people">拼</view>
+          <image class="right" src="/assets/home/arrowBtn.png"></image>
+        </view>
+      </mf-userinfo>
+      <mf-userinfo bindsuccess="addSpell" wx:if="{{activityId}}">
+        <image class="add-cart-img" src="/assets/common/cart_icon.png"></image>
+      </mf-userinfo>
+    </view>
+  </view>
+</template>
