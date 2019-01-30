@@ -2,6 +2,10 @@
 
 //1.0.0版本待完善
 
+![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-24-23_vue.gif)
+![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-25-38_html.gif)
+![](https://github.com/sahadev/htmlfindclass/blob/master/resource/Jan-30-2019%2014-26-10_wxml.gif)
+
 ####1.1.0更新日志:
 - 去除冗余依赖库
 - 去除冗余命令
