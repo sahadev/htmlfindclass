@@ -5,22 +5,12 @@
 
 In the plug-in supported file, right-click -> select HtmlFindClass. If the selected file format is correct, a file with "filename. css" will be output in the directory where the selected file is selected, and the lower right corner will prompt for the path of the file to be generated. This saves time to copy class styles separately.
 
-
 目前支持的文件格式有：html、vue、wxml。
 
 Currently supported file extensions are: html,vue,wxml.
 
-Vue文件示例：
-
-![](resource/Jan-30-2019_14-37-34_vue.gif)
-
 Html文件示例：
-
 ![](resource/Jan-30-2019_14-39-06_html.gif)
-
-微信小程序文件wxml文件示例：
-
-![](resource/Jan-30-2019_14-39-52_wxml.gif)
 
 如果需要生成id或者其它选择器，欢迎大家上手完善这个插件。
 
@@ -50,4 +40,7 @@ No problem feedback has been received for the time being, waiting to be updated.
 - Reduce the minimum compatible version number
 - Increased support for html, wxml, and vue files
 
-
+## TODO
+- 对class的值去重
+- 支持多个class值，例如：class="a b c" 将会生成=> .a{} .b{} .c{}
+- 支持其它类型选择器
