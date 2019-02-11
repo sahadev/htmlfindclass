@@ -65,7 +65,7 @@ function activate(context) {
 
 function readMyData(fileData, parserCallback) {
 
-	const classValueArray = [];
+	const classValueArray = new Set();
 
 	var parser = new htmlparser.Parser({
 		onopentag: function (name, attribs) {
@@ -78,13 +78,26 @@ function readMyData(fileData, parserCallback) {
 
 			if (name == "class") {
 				console.log(name + " - " + attribs);
-				classValueArray.push("." + attribs + "{}\n");
+				if (!attribs)
+					return;
+
+				if (attribs.indexOf(' ') > 0) {
+					const arrays = attribs.split(' ');
+					arrays.forEach(element => {
+						if (!element)
+							return;
+						classValueArray.add("." + element + "{}\n");
+					});
+					return;
+				}
+
+				classValueArray.add("." + attribs + "{}\n");
 			}
 		},
 		onend: function () {
 			console.error('onend');
 			if (parserCallback) {
-				parserCallback.onResult(classValueArray);
+				parserCallback.onResult(Array.from(classValueArray));
 			}
 		},
 		onerror: function () {

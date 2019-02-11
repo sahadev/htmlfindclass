@@ -40,7 +40,9 @@ No problem feedback has been received for the time being, waiting to be updated.
 - Reduce the minimum compatible version number
 - Increased support for html, wxml, and vue files
 
-## TODO
+### 1.3.0
 - 对class的值去重
 - 支持多个class值，例如：class="a b c" 将会生成=> .a{} .b{} .c{}
+
+## TODO
 - 支持其它类型选择器
