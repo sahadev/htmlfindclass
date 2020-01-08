@@ -16,32 +16,41 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld",
-		"onCommand:extension.htmlfindclass"
+		"onCommand:extension.htmlfindclass",
+		"onCommand:extension.htmlfindtag",
+		"onCommand:extension.htmlfindid",
+		"onCommand:extension.htmlfindtest"
 	],
-	"main": "./extension.js",
+	"main": "./src/main.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "extension.htmlfindclass",
 				"title": "HtmlFindClass"
+			},
+			{
+				"command": "extension.htmlfindtag",
+				"title": "HtmlFindTag"
+			},
+			{
+				"command": "extension.htmlfindid",
+				"title": "HtmlFindId"
+			},
+			{
+				"command": "extension.htmlfindtest",
+				"title": "HtmlFindTest"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
-					"when": "resourceExtname == .html",
+					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
 					"command": "extension.htmlfindclass",
 					"group": "1_modification"
 				},
 				{
-					"when": "resourceExtname == .wxml",
-					"command": "extension.htmlfindclass",
-					"group": "1_modification"
-				},
-				{
-					"when": "resourceExtname == .vue",
-					"command": "extension.htmlfindclass",
+					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
+					"command": "extension.htmlfindtag",
 					"group": "1_modification"
 				}
 			]

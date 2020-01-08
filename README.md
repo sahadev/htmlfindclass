@@ -45,4 +45,7 @@ No problem feedback has been received for the time being, waiting to be updated.
 - 支持多个class值，例如：class="a b c" 将会生成=> .a{} .b{} .c{}
 
 ## TODO
-- 支持其它类型选择器
+- 支持其它类型选择器，例如标签选择器、ID选择器、属性选择器等。
+- 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
+- 对Sass、Less写法做支持。
+- 支持pug类型的文件
