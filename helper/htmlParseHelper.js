@@ -4,102 +4,100 @@
 
 // 本文件的主要能力是做文件的读取与解析
 
-const fs = require('fs');
+const fileSystem = require('fs');
 const htmlparser = require("htmlparser2");
 
-function readMyData(fileData, parserCallback) {
+// Demo
+const originCallback = {
+    onopentag: function (name, attribs) {
+    },
+    onopentagname: function (name, attribs) {
+    },
+    onattribute: function (name, attribs) {
+    },
+    ontext: function (name, attribs) {
+    },
+    onclosetag: function (name, attribs) {
+    },
+    onprocessinginstruction: function (name, attribs) {
+    },
+    oncomment: function (name, attribs) {
+    },
+    oncommentend: function (text) {
+    },
+    oncdatastart: function (tagname) {
+    },
+    oncdataend: function (name, attribs) {
+    },
+    onerror: function () {
+    },
+    onend: function () {
+    },
+    getResult: function () {
+        return 'return sth to write.'
+    }
+};
 
-	const classValueArray = new Set();
-
-	var parser = new htmlparser.Parser({
-		onopentag: function (name, attribs) {
-		},
-		ontext: function (text) {
-		},
-		onclosetag: function (tagname) {
-		},
-		onattribute: function (name, attribs) {
-
-			if (name == "class") {
-				console.log(name + " - " + attribs);
-				if (!attribs)
-					return;
-
-				if (attribs.indexOf(' ') > 0) {
-					const arrays = attribs.split(' ');
-					arrays.forEach(element => {
-						if (!element)
-							return;
-						classValueArray.add("." + element + "{}\n");
-					});
-					return;
-				}
-
-				classValueArray.add("." + attribs + "{}\n");
-			}
-		},
-		onend: function () {
-			console.error('onend');
-			if (parserCallback) {
-				parserCallback.onResult(Array.from(classValueArray));
-			}
-		},
-		onerror: function () {
-			console.error('onerror');
-			if (parserCallback) {
-				parserCallback.onError();
-			}
-		}
-	}, { decodeEntities: true });
-	parser.write(fileData);
-	parser.end();
+// 创建代理控制对象
+function createCallbackProxy(originCallback, dealCallback) {
+    return new Proxy(originCallback, {
+        get: function (target, propKey, receiver) {
+            const result = Reflect.get(target, propKey, receiver)
+            if (propKey === 'onend') {
+                dealCallback(target.getResult());
+            }
+            return result;
+        },
+        set: function (target, propKey, value, receiver) {
+            return Reflect.set(target, propKey, value, receiver);
+        }
+    })
 }
 
 /**
- * 
+ * 读取并遍历DOM，并存入文件
  */
-module.exports = function (args) {
-    const file = args.fsPath;
-
-    fs.access(file, fs.constants.F_OK, (err) => {
-        console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-
-        fs.readFile(file, 'utf8', (err, fd) => {
+module.exports = function (filePath, parserCallback) {
+    return new Promise((resolve, reject) => {
+        fileSystem.access(filePath, fileSystem.constants.F_OK, (err) => {
+            console.log(`${filePath} ${err ? 'does not exist' : 'exists'}`);
             if (err) {
-                if (err.code === 'ENOENT') {
-                    console.error('myfile does not exist');
-                    return;
-                }
-
-                throw err;
+                reject(`${err} does not exist`);
+            } else {
+                resolve(filePath);
             }
-
-            readMyData(fd, {
-                onResult: function (result) {
-
-                    const writeFilePath = file + ".css";
-
-                    let resultStr = '';
-                    if (result) {
-                        result.forEach(element => {
-                            resultStr += element;
-                        });
+        });
+    }).then(res => {
+        return new Promise((resolve, reject) => {
+            fileSystem.readFile(res, 'utf8', (err, fd) => {
+                if (err) {
+                    if (err.code === 'ENOENT') {
+                        reject(`${res} does not exist`);
                     }
-
-                    fs.writeFile(writeFilePath, resultStr, function (error) {
-
-                        if (error)
-                            vscode.window.showErrorMessage(error + "");
-                        else
-                            vscode.window.showInformationMessage('The file has been saved! Path -> ' + writeFilePath);
-                    });
-
-                },
-
-                onError: function () {
-                    vscode.window.showErrorMessage("文件解析出错");
+                    reject(err);
                 }
+                resolve(fd);
             });
         });
-    });
+    }).then(fileData => {
+        return new Promise(resolve => {
+            // 开始执行解析
+            const parser = new htmlparser.Parser(createCallbackProxy(parserCallback, function (result) {
+                resolve(result);
+            }), { decodeEntities: true });
+            parser.write(fileData);
+            parser.end();
+        })
+    }).then(result => {
+        return new Promise((resolve) => {
+            const writeFilePath = filePath + ".css";
+            fileSystem.writeFile(writeFilePath, result, function (error) {
+
+                if (error)
+                    throw error
+                else
+                    resolve('The file has been saved! Path -> ' + writeFilePath);
+            });
+        })
+    })
 }

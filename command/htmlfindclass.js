@@ -1,100 +1,57 @@
 // @ts-nocheck
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
-const fs = require('fs');
-const vscode = require('vscode');
-const htmlparser = require("htmlparser2");
 
-function readMyData(fileData, parserCallback) {
+const classValueArray = new Set();
 
-	const classValueArray = new Set();
+// DOM解析各个生命周期回调
+const originCallback = {
+    onopentag: function (name, attribs) {
+    },
+    onopentagname: function (name, attribs) {
+    },
+    onattribute: function (name, attribs) {
+        if (name == "class") {
+            console.log(name + " - " + attribs);
+            if (!attribs)
+                return;
 
-	var parser = new htmlparser.Parser({
-		onopentag: function (name, attribs) {
-		},
-		ontext: function (text) {
-		},
-		onclosetag: function (tagname) {
-		},
-		onattribute: function (name, attribs) {
-
-			if (name == "class") {
-				console.log(name + " - " + attribs);
-				if (!attribs)
-					return;
-
-				if (attribs.indexOf(' ') > 0) {
-					const arrays = attribs.split(' ');
-					arrays.forEach(element => {
-						if (!element)
-							return;
-						classValueArray.add("." + element + "{}\n");
-					});
-					return;
-				}
-
-				classValueArray.add("." + attribs + "{}\n");
-			}
-		},
-		onend: function () {
-			console.error('onend');
-			if (parserCallback) {
-				parserCallback.onResult(Array.from(classValueArray));
-			}
-		},
-		onerror: function () {
-			console.error('onerror');
-			if (parserCallback) {
-				parserCallback.onError();
-			}
-		}
-	}, { decodeEntities: true });
-	parser.write(fileData);
-	parser.end();
-}
-
-module.exports = function (args) {
-    const file = args.fsPath;
-
-    fs.access(file, fs.constants.F_OK, (err) => {
-        console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-
-        fs.readFile(file, 'utf8', (err, fd) => {
-            if (err) {
-                if (err.code === 'ENOENT') {
-                    console.error('myfile does not exist');
-                    return;
-                }
-
-                throw err;
+            if (attribs.indexOf(' ') > 0) {
+                const arrays = attribs.split(' ');
+                arrays.forEach(element => {
+                    if (!element)
+                        return;
+                    classValueArray.add("." + element + "{}\n");
+                });
+                return;
             }
 
-            readMyData(fd, {
-                onResult: function (result) {
+            classValueArray.add("." + attribs + "{}\n");
+        }
+    },
+    ontext: function (name, attribs) {
+    },
+    onclosetag: function (name, attribs) {
+    },
+    onprocessinginstruction: function (name, attribs) {
+    },
+    oncomment: function (name, attribs) {
+    },
+    oncommentend: function (text) {
+    },
+    oncdatastart: function (tagname) {
+    },
+    oncdataend: function (name, attribs) {
+    },
+    onerror: function () {
+    },
+    onend: function () {
 
-                    const writeFilePath = file + ".css";
+    },
+    // 由getResult返回最终处理结果
+    getResult: function () {
+        return Array.from(classValueArray).join('\n');
+    }
+};
 
-                    let resultStr = '';
-                    if (result) {
-                        result.forEach(element => {
-                            resultStr += element;
-                        });
-                    }
-
-                    fs.writeFile(writeFilePath, resultStr, function (error) {
-
-                        if (error)
-                            vscode.window.showErrorMessage(error + "");
-                        else
-                            vscode.window.showInformationMessage('The file has been saved! Path -> ' + writeFilePath);
-                    });
-
-                },
-
-                onError: function () {
-                    vscode.window.showErrorMessage("文件解析出错");
-                }
-            });
-        });
-    });
-}
+module.exports = originCallback;
