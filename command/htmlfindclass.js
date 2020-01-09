@@ -48,7 +48,7 @@ const originCallback = {
     onend: function () {
 
     },
-    // 由getResult返回最终处理结果
+    // 由getResult返回最终处理结果，这里的结果会最终写入文件中
     getResult: function () {
         return Array.from(classValueArray).join('\n');
     }

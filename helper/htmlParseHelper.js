@@ -1,42 +1,9 @@
 // @ts-nocheck
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
-
 // 本文件的主要能力是做文件的读取与解析
-
 const fileSystem = require('fs');
 const htmlparser = require("htmlparser2");
-
-// Demo
-const originCallback = {
-    onopentag: function (name, attribs) {
-    },
-    onopentagname: function (name, attribs) {
-    },
-    onattribute: function (name, attribs) {
-    },
-    ontext: function (name, attribs) {
-    },
-    onclosetag: function (name, attribs) {
-    },
-    onprocessinginstruction: function (name, attribs) {
-    },
-    oncomment: function (name, attribs) {
-    },
-    oncommentend: function (text) {
-    },
-    oncdatastart: function (tagname) {
-    },
-    oncdataend: function (name, attribs) {
-    },
-    onerror: function () {
-    },
-    onend: function () {
-    },
-    getResult: function () {
-        return 'return sth to write.'
-    }
-};
 
 // 创建代理控制对象
 function createCallbackProxy(originCallback, dealCallback) {
@@ -59,6 +26,7 @@ function createCallbackProxy(originCallback, dealCallback) {
  */
 module.exports = function (filePath, parserCallback) {
     return new Promise((resolve, reject) => {
+        // 文件访问
         fileSystem.access(filePath, fileSystem.constants.F_OK, (err) => {
             console.log(`${filePath} ${err ? 'does not exist' : 'exists'}`);
             if (err) {
@@ -69,6 +37,7 @@ module.exports = function (filePath, parserCallback) {
         });
     }).then(res => {
         return new Promise((resolve, reject) => {
+            // 文件读取
             fileSystem.readFile(res, 'utf8', (err, fd) => {
                 if (err) {
                     if (err.code === 'ENOENT') {
@@ -90,9 +59,9 @@ module.exports = function (filePath, parserCallback) {
         })
     }).then(result => {
         return new Promise((resolve) => {
+            // 结果写入
             const writeFilePath = filePath + ".css";
             fileSystem.writeFile(writeFilePath, result, function (error) {
-
                 if (error)
                     throw error
                 else

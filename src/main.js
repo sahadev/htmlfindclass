@@ -4,6 +4,7 @@
 const htmlfindclassCmd = require('../command/htmlfindclass');
 const htmlfindidCmd = require('../command/htmlfindid');
 const htmlfindtagCmd = require('../command/htmlfindtag');
+
 const vscode = require('vscode');
 
 const commandEntryHelper = require('../helper/commandEntryHelper');
