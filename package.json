@@ -19,7 +19,8 @@
 		"onCommand:extension.htmlfindclass",
 		"onCommand:extension.htmlfindtag",
 		"onCommand:extension.htmlfindid",
-		"onCommand:extension.htmlfindtest"
+		"onCommand:extension.htmlfindtest",
+		"onLanguage:jade"
 	],
 	"main": "./src/main.js",
 	"contributes": {
@@ -46,12 +47,12 @@
 				{
 					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
 					"command": "extension.htmlfindclass",
-					"group": "1_modification"
+					"group": "htmlfind@1"
 				},
 				{
 					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
 					"command": "extension.htmlfindtag",
-					"group": "1_modification"
+					"group": "htmlfind@2"
 				}
 			]
 		}
