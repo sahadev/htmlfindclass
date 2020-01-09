@@ -12,10 +12,10 @@ const originCallback = {
     },
     onattribute: function (name, attribs) {
         if (name == "class") {
-            console.log(name + " - " + attribs);
             if (!attribs)
                 return;
 
+            // 处理多个class
             if (attribs.indexOf(' ') > 0) {
                 const arrays = attribs.split(' ');
                 arrays.forEach(element => {
@@ -45,10 +45,11 @@ const originCallback = {
     },
     onerror: function () {
     },
+    // 做清理工作，将Set清空
     onend: function () {
-
+        classValueArray.clear();
     },
-    // 由getResult返回最终处理结果，这里的结果会最终写入文件中
+    // 由getResult返回最终处理结果，这里的结果会最终写入文件中，这个方法会优于onend调用
     getResult: function () {
         return Array.from(classValueArray).join('\n');
     }

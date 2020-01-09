@@ -9,11 +9,10 @@ const htmlparser = require("htmlparser2");
 function createCallbackProxy(originCallback, dealCallback) {
     return new Proxy(originCallback, {
         get: function (target, propKey, receiver) {
-            const result = Reflect.get(target, propKey, receiver)
             if (propKey === 'onend') {
                 dealCallback(target.getResult());
             }
-            return result;
+            return Reflect.get(target, propKey, receiver);
         },
         set: function (target, propKey, value, receiver) {
             return Reflect.set(target, propKey, value, receiver);
