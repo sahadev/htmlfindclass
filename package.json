@@ -53,6 +53,11 @@
 					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
 					"command": "extension.htmlfindtag",
 					"group": "htmlfind@2"
+				},
+				{
+					"when": "resourceExtname == .html || resourceExtname == .wxml || resourceExtname == .vue",
+					"command": "extension.htmlfindid",
+					"group": "htmlfind@3"
 				}
 			]
 		}

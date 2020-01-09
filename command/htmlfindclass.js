@@ -21,12 +21,12 @@ const originCallback = {
                 arrays.forEach(element => {
                     if (!element)
                         return;
-                    classValueArray.add("." + element + "{}\n");
+                    classValueArray.add("." + element + " {\n}\n");
                 });
                 return;
             }
 
-            classValueArray.add("." + attribs + "{}\n");
+            classValueArray.add("." + attribs + " {\n}\n");
         }
     },
     ontext: function (name, attribs) {

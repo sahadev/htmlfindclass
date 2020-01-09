@@ -13,16 +13,16 @@
               </view>
               <view class="splitter">
               </view>
-              <view class="top-right-container">
+              <view id=1 class="top-right-container">
                   <view class="subtitle">今日交易额/元</view>
                   <view class="total-price">69072.93</view>
               </view>
           </view>
       </view>
-      <view class="my-order-list my-order-item 3">
+      <view id=2 class="my-order-list my-order-item 3">
           <view class="my-order-item">
               <view class="order-item-top">
-                  <view class="order-name">新的订单</view>
+                  <view id=3 class="order-name">新的订单</view>
                   <view class="order-create-time">2018-12-04 23:32:15</view>
               </view>
               <view class="order-item-middle">

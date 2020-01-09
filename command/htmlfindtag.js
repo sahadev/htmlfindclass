@@ -2,14 +2,14 @@
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
 
-const idValueArray = new Set();
+const tagValueArray = new Set();
 
 // DOM解析各个生命周期回调
 const originCallback = {
 	onopentag: function (name, attribs) {
 	},
 	onopentagname: function (name, attribs) {
-		idValueArray.add("#" + name + " {\n}\n");
+		tagValueArray.add(name + " {\n}\n");
 	},
 	onattribute: function (name, attribs) {
 	},
@@ -30,11 +30,11 @@ const originCallback = {
 	onerror: function () {
 	},
 	onend: function () {
-		idValueArray.clear();
+		tagValueArray.clear();
 	},
 	// 由getResult返回最终处理结果，这里的结果会最终写入文件中
 	getResult: function () {
-		return Array.from(idValueArray).join('\n');
+		return Array.from(tagValueArray).join('\n');
 	}
 };
 
