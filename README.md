@@ -43,6 +43,7 @@ No problem feedback has been received for the time being, waiting to be updated.
 - 修复一些Bug
 
 ## TODO
+- 支持新增部分单独划分
 - 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
 - 对Sass、Less写法做支持。
 - 支持pug类型的文件
