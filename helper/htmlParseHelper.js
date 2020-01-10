@@ -26,7 +26,8 @@ function createCallbackProxy(originCallback, dealCallback) {
 module.exports = function (filePath, parserCallback) {
     return new Promise((resolve, reject) => {
         // 文件访问
-        fileSystem.access(filePath, fileSystem.constants.F_OK, (err) => {
+        // Tests a user's permissions for the file or directory specified by path.
+        fileSystem.access(filePath, fileSystem.constants.F_OK | fileSystem.constants.R_OK, (err) => {
             console.log(`${filePath} ${err ? 'does not exist' : 'exists'}`);
             if (err) {
                 reject(`${err} does not exist`);
@@ -60,12 +61,17 @@ module.exports = function (filePath, parserCallback) {
         return new Promise((resolve) => {
             // 结果写入
             const writeFilePath = filePath + ".css";
-            fileSystem.writeFile(writeFilePath, result, function (error) {
+
+            // 添加新增时间
+            result = `/* =============== 以下结果追加于: ${new Date().toLocaleString()} =============== */\n${result}`
+
+            fileSystem.appendFile(writeFilePath, result, function (error) {
                 if (error)
                     throw error
                 else
                     resolve('The file has been saved! Path -> ' + writeFilePath);
             });
+
         })
     })
 }
