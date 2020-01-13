@@ -42,8 +42,10 @@ No problem feedback has been received for the time being, waiting to be updated.
 - 对结构进行了重构，支持多种命令注入执行
 - 修复一些Bug
 
+### 1.5.0
+- 对新追加的class/id/tag做文件追加
+
 ## TODO
-- 支持新增部分单独划分
 - 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
 - 对Sass、Less写法做支持。
 - 支持pug类型的文件
