@@ -35,9 +35,12 @@ const originCallback = {
 	onend: function () {
 		idValueArray.clear();
 	},
-	// 由getResult返回最终处理结果，这里的结果会最终写入文件中
 	getResult: function () {
-		return Array.from(idValueArray).join('\n');
+		return Array.from(idValueArray);
+	},
+	// 表达式校验规则，用于检测之前的内容是否匹配这一规则
+	getCheckRegExp: function () {
+		return /(\#[\w -]*{\n}\n)+/g;
 	}
 };
 

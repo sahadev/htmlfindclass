@@ -63,21 +63,18 @@ module.exports = function (filePath, parserCallback) {
             const writeFilePath = filePath + ".css";
             fileSystem.readFile(writeFilePath, 'utf8', (err, fd) => {
                 if (err) {
-                    if (err.code === 'ENOENT') {
-                        reject(`${writeFilePath} does not exist`);
-                    }
-                    reject(err);
+                    reject({ result });
                 }
                 resolve({ fd, result });
             });
         })
-    }
-    ).then(result => {
+    }).then(result => {
+        // 如果文件存在, 则对新老结果进行比对
         return new Promise(resolve => {
-            // 对新老结果进行比对
-            const regex = /(\.[\w -]*{\n}\n)+/g;
+            const regex = parserCallback.getCheckRegExp();
             const string = result.fd;
 
+            // 存储文件中已存在的选择器
             const matches = new Set();
             let match;
             while (match = regex.exec(string)) {
@@ -85,24 +82,30 @@ module.exports = function (filePath, parserCallback) {
             }
 
             // 用于存放最终写入的结果
-            let newArray = [];
+            let finallyArray = [];
             result.result.forEach(element => {
                 if (!matches.has(element)) {
-                    newArray.push(element);
+                    finallyArray.push(element);
                 }
             });
-            console.info(newArray.join('\n'));
-            resolve(newArray)
+            resolve(finallyArray)
         })
+    }, emptyResult => {
+        // 如果不存在
+        return Promise.resolve(emptyResult.result);
     }).then(result => {
         return new Promise((resolve, reject) => {
-
-            // 结果写入
             const writeFilePath = filePath + ".css";
+
+            // 对数组转化为字符串
+            if (result instanceof Array) {
+                result = result.join('\n');
+            }
 
             // 添加新增时间
             result = `/* =============== 以下结果追加于: ${new Date().toLocaleString()} =============== */\n${result}`
 
+            // 结果写入
             fileSystem.appendFile(writeFilePath, result, function (error) {
                 if (error)
                     throw error

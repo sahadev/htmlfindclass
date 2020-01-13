@@ -52,6 +52,10 @@ const originCallback = {
     getResult: function () {
         // 从文档中遍历的结果
         return Array.from(classValueArray);
+    },
+    // 表达式校验规则，用于检测之前的内容是否匹配这一规则
+    getCheckRegExp: function () {
+        return /(\.[\w -]*{\n}\n)+/g;
     }
 };
 
