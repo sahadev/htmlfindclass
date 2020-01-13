@@ -47,3 +47,4 @@ No problem feedback has been received for the time being, waiting to be updated.
 - 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
 - 对Sass、Less写法做支持。
 - 支持pug类型的文件
+- 开启文件监听器实现实时生成的能力 -watch //https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_watch_filename_options_listener

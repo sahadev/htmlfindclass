@@ -4,7 +4,7 @@
           <image class="top-background" src="/images/icon_home_top_background.png"></image>
           <view class="top-text-area">
               <view class="top-left-container">
-                  <view class="subtitle">
+                  <view class="subtitle xxxxxx" class="sen">
                       今日订单量/个
                   </view>
                   <view class="total">
@@ -13,7 +13,8 @@
               </view>
               <view class="splitter">
               </view>
-              <view id=1 class="top-right-container">
+              <view id=1 class="top-right-container" class="hahah">
+                  
                   <view class="subtitle">今日交易额/元</view>
                   <view class="total-price">69072.93</view>
               </view>

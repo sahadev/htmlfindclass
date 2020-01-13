@@ -49,9 +49,9 @@ const originCallback = {
     onend: function () {
         classValueArray.clear();
     },
-    // 由getResult返回最终处理结果，这里的结果会最终写入文件中，这个方法会优于onend调用
     getResult: function () {
-        return Array.from(classValueArray).join('\n');
+        // 从文档中遍历的结果
+        return Array.from(classValueArray);
     }
 };
 

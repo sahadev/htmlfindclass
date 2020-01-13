@@ -58,7 +58,45 @@ module.exports = function (filePath, parserCallback) {
             parser.end();
         })
     }).then(result => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            // 源文件读取
+            const writeFilePath = filePath + ".css";
+            fileSystem.readFile(writeFilePath, 'utf8', (err, fd) => {
+                if (err) {
+                    if (err.code === 'ENOENT') {
+                        reject(`${writeFilePath} does not exist`);
+                    }
+                    reject(err);
+                }
+                resolve({ fd, result });
+            });
+        })
+    }
+    ).then(result => {
+        return new Promise(resolve => {
+            // 对新老结果进行比对
+            const regex = /(\.[\w -]*{\n}\n)+/g;
+            const string = result.fd;
+
+            const matches = new Set();
+            let match;
+            while (match = regex.exec(string)) {
+                matches.add(match[0]);
+            }
+
+            // 用于存放最终写入的结果
+            let newArray = [];
+            result.result.forEach(element => {
+                if (!matches.has(element)) {
+                    newArray.push(element);
+                }
+            });
+            console.info(newArray.join('\n'));
+            resolve(newArray)
+        })
+    }).then(result => {
+        return new Promise((resolve, reject) => {
+
             // 结果写入
             const writeFilePath = filePath + ".css";
 
@@ -72,6 +110,9 @@ module.exports = function (filePath, parserCallback) {
                     resolve('The file has been saved! Path -> ' + writeFilePath);
             });
 
+            // createReadStream
         })
+    }).finally(() => {
+        fileSystem.close(2);
     })
 }
