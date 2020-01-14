@@ -4,18 +4,17 @@
             <image class="top-background" src="/images/icon_home_top_background.png"></image>
             <view class="top-text-area">
                 <view class="top-left-container">
-                    <view class="subtitle xxxxxx yyyyy zzzzz aaaaa bbb ccc dd e" class="sen">
+                    <view class="subtitle">
                         今日订单量/个
                     </view>
-                    <view class="total" class="hahahi">
+                    <view class="total">
                         132
                     </view>
                 </view>
-                <view class="splitter">
+                <view class="splitter" class='class2'>
                 </view>
-                <view id=1 class="top-right-container" class="hahah">
-                    <div id="x666"></div>
-                    <view class="subtitle subtitle1 subtitle2 subtitle3 subtitle4">今日交易额/元</view>
+                <view id=1 class="top-right-container">
+                    <view class="subtitle">今日交易额/元</view>
                     <view class="total-price">69072.93</view>
                 </view>
             </view>
