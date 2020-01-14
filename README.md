@@ -47,5 +47,6 @@ Wxml文件示例：
 ## TODO
 - 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
 - 对Sass、Less写法做支持。
-- 支持pug类型的文件
+- 支持pug类型的文件。
+- 对小程序的wxml文件单独处理，在wxml文件中写出的样式自动写入到wxss中，而不是wxml.css中。
 - 开启文件监听器实现实时生成的能力 -watch //https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_watch_filename_options_listener
