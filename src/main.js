@@ -20,6 +20,7 @@ const commandCB = {
 function onCommandCallback(commandStr) {
     console.info(`命令 ${commandStr} 已注册`);
     return function (args) {
+        debugger
         commandEntryHelper(args).then(function (filePath) {
             // 对指定路径的文件进行解析，解析结果传递至第二个参数
             htmlParseHelper(filePath, commandCB[commandStr]).catch(err => {

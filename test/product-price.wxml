@@ -31,7 +31,7 @@
                     <view class="product-num">共5件</view>
                     <image class="icon-arrow-right" src="/images/icon_arrow_right.png"></image>
                 </view>
-                <view class="order-item-bottom">
+                <view class="-order-item-bottom">
                     <view class="price-name">合计</view>
                     <view class="price">¥582.9</view>
                     <view class="control-button">确认接单</view>

@@ -55,6 +55,7 @@ Wxml文件示例：
 - 对小程序的wxml文件单独处理，在wxml文件中写出的样式自动写入到wxss中，而不是wxml.css中。
 - 开启文件监听器实现实时生成的能力 -watch //https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_watch_filename_options_listener
 - 对Sass的支持：如果在检测class时发现命名是以"-"开头的，则输出时以scss方式输出或者以父子选择器输出。#限制：不能输出嵌套规则。无法通过单次的运行确认某个选择器在某个节点中是唯一使用的。
+- 改写htmlparser2，实现深度与节点对象回调。深度从0开始，节点对象可以追溯所有的父节点。对象回调时通过代理回调，防止外部更改内部对象。
 
 ----
 
