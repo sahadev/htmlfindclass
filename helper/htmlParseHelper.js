@@ -4,10 +4,12 @@
 // 本文件的主要能力是做文件的读取与解析
 const fileSystem = require('fs');
 const htmlparser = require("htmlparser2");
+const createAdapterParserCallback = require('./htmlParserAdapter')
 
 // 创建代理控制对象
 function createCallbackProxy(originCallback, dealCallback) {
-    return new Proxy(originCallback, {
+    // 对于业务的代理再通过更丰富的适配器通信，适配器提供了节点对象与深度的能力
+    return createAdapterParserCallback(new Proxy(originCallback, {
         get: function (target, propKey, receiver) {
             if (propKey === 'onend') {
                 dealCallback(target.getResult());
@@ -17,7 +19,7 @@ function createCallbackProxy(originCallback, dealCallback) {
         set: function (target, propKey, value, receiver) {
             return Reflect.set(target, propKey, value, receiver);
         }
-    })
+    }))
 }
 
 /**
