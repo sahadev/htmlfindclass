@@ -44,9 +44,19 @@ Wxml文件示例：
     }
 ```
 
+### 1.6.0
+- 唯一性选择器: '-'. 当有class选择器的值是以'-'开头时，类似'-item'，则会自动输出该选择器在当前环境中的唯一选择。
+
 ## TODO
 - 支持对Vue文件做专门处理，会自动在Vue文件的Style标签内追加新属性。
-- 对Sass、Less写法做支持。
+- 对Sass、Less写法做支持。支持输出sass类的树形结构代码
+- 对于Sass/Scss在遍历时遵循的规则为：id>class>tag
 - 支持pug类型的文件。
 - 对小程序的wxml文件单独处理，在wxml文件中写出的样式自动写入到wxss中，而不是wxml.css中。
 - 开启文件监听器实现实时生成的能力 -watch //https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_watch_filename_options_listener
+- 对Sass的支持：如果在检测class时发现命名是以"-"开头的，则输出时以scss方式输出或者以父子选择器输出。#限制：不能输出嵌套规则。无法通过单次的运行确认某个选择器在某个节点中是唯一使用的。
+
+----
+
+**HtmlFindClass插件要解决什么问题？**
+> 核心目的是要解决：html到css之间样式匹配关系的重复书写问题。这是这个插件的实现方向。
